@@ -7,29 +7,31 @@ class ForeignToplevelManagerV1Private;
 class ForeignToplevelHandleV1Private;
 class ForeignToplevelHandleV1;
 
-class Q_WAYLANDCLIENT_EXPORT ForeignToplevelManagerV1 
-	: public QObject {
+class Q_WAYLANDCLIENT_EXPORT ForeignToplevelManagerV1 : public QObject {
 	Q_OBJECT
-	Q_PROPERTY(QList<ForeignToplevelHandleV1*> toplevels READ toplevels NOTIFY toplevelsChanged);
-public:
+	Q_PROPERTY(QList<ForeignToplevelHandleV1 *> toplevels READ toplevels
+			   NOTIFY toplevelsChanged);
+
+    public:
 	ForeignToplevelManagerV1();
-	QList<ForeignToplevelHandleV1*> toplevels();
+	QList<ForeignToplevelHandleV1 *> toplevels();
 	ForeignToplevelHandleV1 *handleFromObject(void *object);
 
-signals:
-	void toplevelsChanged(QList<ForeignToplevelHandleV1*> toplevels);
+    signals:
+	void toplevelsChanged(QList<ForeignToplevelHandleV1 *> toplevels);
 
-private:
+    private:
 	ForeignToplevelManagerV1Private *d;
 };
 
-class Q_WAYLANDCLIENT_EXPORT ForeignToplevelHandleV1 
-	: public QObject {
+class Q_WAYLANDCLIENT_EXPORT ForeignToplevelHandleV1 : public QObject {
 	Q_OBJECT
 	Q_PROPERTY(QString appId READ appId NOTIFY appIdChanged);
 	Q_PROPERTY(QString title READ title NOTIFY titleChanged);
-	Q_PROPERTY(QSet<State> state READ state WRITE setState NOTIFY stateChanged);
-public:
+	Q_PROPERTY(QSet<State> state READ state WRITE setState NOTIFY
+			   stateChanged);
+
+    public:
 	enum State {
 		Maximized = 0, // the toplevel is maximized
 		Minimized = 1, // the toplevel is minimized
@@ -38,7 +40,8 @@ public:
 	};
 	Q_ENUM(State)
 
-	ForeignToplevelHandleV1(ForeignToplevelManagerV1Private *manager, void *object);
+	ForeignToplevelHandleV1(ForeignToplevelManagerV1Private *manager,
+				void *object);
 	QString appId();
 	QString title();
 	QSet<State> state();
@@ -47,11 +50,11 @@ public:
 	void *object();
 	ForeignToplevelManagerV1 *manager();
 
-signals:
+    signals:
 	void appIdChanged(QString appId);
 	void titleChanged(QString title);
 	void stateChanged(QSet<State> state);
 
-private:
+    private:
 	ForeignToplevelHandleV1Private *d;
 };
