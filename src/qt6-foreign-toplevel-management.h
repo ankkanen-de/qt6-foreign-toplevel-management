@@ -19,6 +19,8 @@ class Q_WAYLANDCLIENT_EXPORT ForeignToplevelManagerV1 : public QObject {
 
     signals:
 	void toplevelsChanged(QList<ForeignToplevelHandleV1 *> toplevels);
+	void toplevelAdded(ForeignToplevelHandleV1 *toplevel);
+	void toplevelRemoved(ForeignToplevelHandleV1 *toplevel);
 
     private:
 	ForeignToplevelManagerV1Private *d;

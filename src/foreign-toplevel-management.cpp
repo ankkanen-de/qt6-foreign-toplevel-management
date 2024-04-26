@@ -27,8 +27,10 @@ ForeignToplevelManagerV1::handleFromObject(void *object)
 void ForeignToplevelManagerV1Private::zwlr_foreign_toplevel_manager_v1_toplevel(
 	struct ::zwlr_foreign_toplevel_handle_v1 *toplevel)
 {
-	m_toplevels.insert(toplevel,
-			   new ForeignToplevelHandleV1(this, toplevel));
+	ForeignToplevelHandleV1 *handle =
+		new ForeignToplevelHandleV1(this, toplevel);
+	m_toplevels.insert(toplevel, handle);
+	emit q->toplevelAdded(handle);
 	emit q->toplevelsChanged(m_toplevels.values());
 }
 
@@ -41,6 +43,7 @@ void ForeignToplevelManagerV1Private::removeToplevel(
 				ForeignToplevelHandleV1 *>::iterator i) {
 			return i.value() == toplevel;
 		});
+	emit q->toplevelRemoved(toplevel);
 	emit q->toplevelsChanged(m_toplevels.values());
 }
 
